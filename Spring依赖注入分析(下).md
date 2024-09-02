@@ -333,9 +333,47 @@ public boolean isAutowireCandidate(BeanDefinitionHolder bdHolder, DependencyDesc
 
 
 
-### 处理@Value值-resolveEmbeddedValue
+### 处理@Value值
 
 StringValueResolver:字符串值处理器， 默认情况下，spring进行Bean的创建前，会通过lambda表达式创建StringValueResolver对象；
+
+#### StringValueResolver创建
+
+- PropertySourcesPlaceholderConfigurer#postProcessBeanFactory, 即在容器启动前的加工BeanFactory阶段，创建了StringValueResolver对象，并放入容器；
+
+  - PropertySourcesPlaceholderConfigurer#processProperties
+
+    ```java
+    protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess,
+          final ConfigurablePropertyResolver propertyResolver) throws BeansException {
+    
+       propertyResolver.setPlaceholderPrefix(this.placeholderPrefix);
+       propertyResolver.setPlaceholderSuffix(this.placeholderSuffix);
+       propertyResolver.setValueSeparator(this.valueSeparator);
+    
+       StringValueResolver valueResolver = strVal -> {
+          String resolved = (this.ignoreUnresolvablePlaceholders ?
+                propertyResolver.resolvePlaceholders(strVal) :
+                propertyResolver.resolveRequiredPlaceholders(strVal));
+          if (this.trimValues) {
+             resolved = resolved.trim();
+          }
+          return (resolved.equals(this.nullValue) ? null : resolved);
+       };
+    
+       doProcessProperties(beanFactoryToProcess, valueResolver);
+    }
+    ```
+
+    
+
+#### resolveEmbeddedValue
+
+整体调用过程：
+
+**调用StringValueResolver => PropertySourcePropertyResolver 解析@Value注解，从PropertySources中查找属性值返回；**
+
+
 
 ```java
 @Override
@@ -357,28 +395,12 @@ public String resolveEmbeddedValue(@Nullable String value) {
 ![StringValueResolver实现](assets/image-20230119172522963.png)
 
 ```java
-void addEmbeddedValueResolver(StringValueResolver valueResolver);
-protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
-
-   //创建StringValueResolver实例； 获取环境参数，替换@Value的value值；
-   if (!beanFactory.hasEmbeddedValueResolver()) {
-      beanFactory.addEmbeddedValueResolver(strVal -> getEnvironment().resolvePlaceholders(strVal));
-   }
-
-   // 创建非懒加载的单例bean
-   beanFactory.preInstantiateSingletons();
-}
-```
-
-```java
 //StandardElement#resolvePlaceholders，调用内部的属性解析器解析@Value的value值；PropertyResolver接口实现类为PropertySourcePropertyResolver; 
 @Override
 public String resolvePlaceholders(String text) {
    return this.propertyResolver.resolvePlaceholders(text);
 }
 ```
-
-![StandardElement#resolvePlaceholders](assets/image-20230119173437118.png)
 
 ```java
 //PropertySourcePropertyResolver#resolvePlaceholders； 传入Helper对象，负责替换value值；
@@ -402,6 +424,8 @@ public String replacePlaceholders(String value, PlaceholderResolver placeholderR
    return parseStringValue(value, placeholderResolver, null);
 }
 ```
+
+
 
 核心方法
 

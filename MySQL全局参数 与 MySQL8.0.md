@@ -430,7 +430,7 @@ mysql> explain select * from t3 where upper(c2)='ZHUGE';  --使用了函数索�
 
 ### 新增innodb_dedicated_server自适应参数
 
-InnoDB检测服务内存大小自动设置innodb_buffer_pool_size, innodb_log_file_size等参数， 尽可能占用系统资源提升邪能；
+InnoDB检测服务内存大小自动设置innodb_buffer_pool_size, innodb_log_file_size等参数， 尽可能占用系统资源提升性能；
 
 服务器只有来运行MySQL的场景下，可以开启。若有其他应用，不建议开启；
 
