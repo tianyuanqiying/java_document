@@ -143,10 +143,10 @@ HandlerMapping负责去寻找Handler，并且保存路径和Handler之间的映�
 1. **扫描所有的Bean对象；**
 2. **bean的Class过滤、过滤条件为Bean Class上包含@Controller， @PostMapping注解；**
 3. **遍历Bean的所有方法，找到加了@PostMapping的Method**
-4. **解析@PostMapping， 封装为PostMappingInfo;**
-5. **以url为key, PostMappingInfo为value, 放入Map属性urlLookUp;**
-6. **以PostMappingInfo为Key,  HandlerMethod为value, 放入Map属性mappingLookUp;**
-7. **以PostMappingInfo为key,  包装path, HandlerMethod的对象MappingRegistration为value, 放入Map属性registry**
+4. **解析@PostMapping， 封装为RequestMappingInfo;**
+5. **以url为key, RequestMappingInfo为value, 放入Map属性urlLookUp;**
+6. **以RequestMappingInfo为Key,  HandlerMethod为value, 放入Map属性mappingLookUp;**
+7. **以RequestMappingInfo为key,  包装path, HandlerMethod的对象MappingRegistration为value, 放入Map属性registry**
 
 
 

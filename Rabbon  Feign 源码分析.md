@@ -552,7 +552,7 @@ public class ConsumerController {
   - dispatch.get(method).invoke(args) :  根据方法名找到处理器、类型为SynchronousMethodHandler
     - SynchronousMethodHandler#invoke 
       - SynchronousMethodHandler#executeAndDecode
-        - Request request = targetRequest(template) : 调用FeignInterceptor拦截器、创建Request请求
+        - Request request = targetRequest(template) : 调用RequestInterceptor拦截器、创建Request请求
         
         - response = client.execute(request, options) ： 调用LoadBalancerFeignClient发起请求
         
@@ -576,7 +576,7 @@ FeignLoadBalancer继承AbstractLoadBalancerAwareClient，executeWithLoadBalancer
   - 创建ServerOperation对象、用lambda表达式实现了call方法
     - submit方法中会调用到call方法里的实现；
   - LoadBalancerCommand#submit方法传入ServerOperation对象
-    - selectServer() ：
+    - **selectServer() ：**
       - Server server = loadBalancerContext.getServerFromLoadBalancer(loadBalancerURI, loadBalancerKey) ： AbstractLoadBalancerAwareClient继承了LoadBalancerContext， 该方法在父类实现；
         - ILoadBalancer lb = getLoadBalancer() ： 获取负载均衡器，默认为ZoneAwareLoadBalancer；
         - Server svc = lb.chooseServer(loadBalancerKey) ： 根据服务名获取服务列表并选择一个服务实例；
@@ -643,5 +643,22 @@ Client ： 客户端接口、实现该接口就拥有了发起请求的能力；
 
 
 
+## Feign如何调用Nacos服务
 
+在Feign的IOC容器初始化时， 会扫描RibbonClientConfiguration配置类， 创建ZoneAwareLoadBalancer负载均衡器、该负载均衡器的构造方法里调用Nacos服务；
 
+```java
+@Bean
+@ConditionalOnMissingBean
+public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
+      ServerList<Server> serverList, ServerListFilter<Server> serverListFilter,
+      IRule rule, IPing ping, ServerListUpdater serverListUpdater) {
+   if (this.propertiesFactory.isSet(ILoadBalancer.class, name)) {
+      return this.propertiesFactory.get(ILoadBalancer.class, config, name);
+   }
+   return new ZoneAwareLoadBalancer<>(config, rule, ping, serverList,
+         serverListFilter, serverListUpdater);
+}
+```
+
+Nacos源码中，**NacosNamingService包装与Nacos服务端的交互， 因此Feign如果想要从Nacos获取服务列表，必须要调用NacosNamingService,  实际上，  ServerList是服务列表接口， 是SpringCloud的服务发现的一套规范， Nacos服务NacosServerList实现了该接口，通过NacosServerList调用NacosNamingService，进而发起Http请求**； 类似适配器模式；
