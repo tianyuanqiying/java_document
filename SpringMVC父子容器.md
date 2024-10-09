@@ -61,7 +61,7 @@ Servlet3.0中，提供两种方式，一种注解版，另一种SPI;
 
 - SPI版
 
-  ![Tomcat Servlet SPI](assets/\image-20230318150202000.png)
+  ![Tomcat Servlet SPI](./assets/image-20230318150202000.png)
 
 /META_INF/services目录下创建ServletContainerInitailizer文件，文件中标明
 
@@ -81,7 +81,7 @@ SPI ： service provider interface, 服务提供者接口， 服务提供商提�
 
 1. 在固定的目录放上接口的文件名,  并写明接口实现类的全类名
 
-![IUserDao](assets/\image-20230318152739668.png)
+![IUserDao](./assets/image-20230318152739668.png)
 
 2. SPI扫描调用
 
@@ -112,7 +112,7 @@ public class SpiTest {
 
 3. 可以在Web应用中，在Servlet的SPI放入对应的接口文 件
 
-![ServletContainerInitailizer SPI](assets/\image-20230318155048925.png)
+![ServletContainerInitailizer SPI](./assets/image-20230318155048925.png)
 
 ```java
 public class CustomServletInitailizer implements ServletContainerInitializer {
@@ -237,7 +237,7 @@ public class SpringServletContainerInitializer implements ServletContainerInitia
 
 
 
-![继承关系](assets/\image-20230318165601925.png)
+![继承关系](./assets/image-20230318165601925.png)
 
 ```java
 public abstract class AbstractDispatcherServletInitializer extends AbstractContextLoaderInitializer {
@@ -303,7 +303,7 @@ public abstract class AbstractAnnotationConfigDispatcherServletInitializer
 
 这也就对应上开头的XML注册ContextLoaderListener;
 
-![ContextLoaderListener XML](assets/\image-20230318170436627.png)
+![ContextLoaderListener XML](./assets/image-20230318170436627.png)
 
 #### registerDispatcherServlet(servletContext)
 
@@ -343,7 +343,7 @@ protected WebApplicationContext createServletApplicationContext() {
 
 这里就和xml中DispatcherServlet对应上了；
 
-![DispatcherServlet XML](assets/\image-20230318171642531.png)
+![DispatcherServlet XML](./assets/image-20230318171642531.png)
 
 
 
@@ -560,7 +560,7 @@ public @interface EnableWebMvc {
 
 ## 面试2：是否可以把所有Bean都通过Spring容器来管理？（Spring 的applicationContext.xml中配置全局扫描)
 
-不可以，这样会导致我们请求接口的时候产生404。 如果所有的Bean都交给父容器， SpringMVC在初始化HandlerMethods的时候（initHandlerMethods）无法根据 Controller的handler方法注册HandlerMethod，并没有去查找父容器的bean； 也就无法根据请求URI 获取到 HandlerMethod来进行匹配.![image-20230319004042824](assets/\image-20230319004042824.png)
+不可以，这样会导致我们请求接口的时候产生404。 如果所有的Bean都交给父容器， SpringMVC在初始化HandlerMethods的时候（initHandlerMethods）无法根据 Controller的handler方法注册HandlerMethod，并没有去查找父容器的bean； 也就无法根据请求URI 获取到 HandlerMethod来进行匹配.![image-20230319004042824](./assets/image-20230319004042824.png)
 
 ## 面试3：是否可以把我们所需的Bean都放入Spring-mvc子 容器里面来管理（springmvc的springservlet.xml中配置全局扫描）?
 

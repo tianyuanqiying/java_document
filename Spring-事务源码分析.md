@@ -127,7 +127,7 @@ public static BeanDefinition registerAspectJAutoProxyCreatorIfNecessary(
 
 	## 事务代理对象创建
 
-![事务PointCut还行](assets/image-20230311154824621.png)
+![事务PointCut还行](./assets/image-20230311154824621.png)
 
 若类或者方法存在@Transaction， 就会创建AOP代理对象；
 
@@ -143,7 +143,7 @@ Advisor中，advice定义增强逻辑， TransactionInterceptor封装了事务�
 5. 执行目标的SQL， 若该目标也是动态对象，则会执行其他的代理逻辑；
 6. 出现异常，则回滚、否则提交
 
-![Interceptor拦截器](assets/image-20230311161630207.png)
+![Interceptor拦截器](./assets/image-20230311161630207.png)
 
 ```java
 @Override

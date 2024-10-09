@@ -269,7 +269,7 @@ protected void sendRedirect(HttpServletRequest request, HttpServletResponse resp
 
 7. 1~6步骤被trycatchfinally包住、若发生异常、则调用处理器的执行链的triggerAfterCompletion方法；
 
-![拦截器](E:\javamd文档\拦截器.png)
+![拦截器](./assets/拦截器.png)
 
 ### 源码分析 
 

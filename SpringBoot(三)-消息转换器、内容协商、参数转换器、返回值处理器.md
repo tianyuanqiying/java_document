@@ -2,7 +2,7 @@
 
 ## 响应处理-【源码分析】-ReturnValueHandler 
 
-![数据响应](assets/\image-20221030154459771.png)
+![数据响应](./assets/image-20221030154459771.png)
 
 **HandlerMethodReturnValueHandler**： 接口， 每个请求处理都会有各种各样的返回值， 而SpringMvc中，存在多个返回值处理器来处理这些返回值；
 
@@ -17,7 +17,7 @@ public interface HandlerMethodReturnValueHandler {
 - supportReturnType :  是否支持某个返回值类型；
 - handleReturnValue :  处理请求的返回值；
 
-![HandlerMethodReturnValueHandler的实现类](assets/\image-20221030161342720.png)
+![HandlerMethodReturnValueHandler的实现类](./assets/image-20221030161342720.png)
 
 ### 1.1、应用：JSON返回值
 
@@ -215,7 +215,7 @@ public class RequestResponseBodyMethodProcessor extends AbstractMessageConverter
 
    1. 内容协商； 获取浏览器支持的内容相应类型
 
-      ![请求accept类型](assets/\image-20221030221411471.png)
+      ![请求accept类型](./assets/image-20221030221411471.png)
 
    2. 获取服务器能返回什么类型的相应数据 (HttpMessageConverter)
 
@@ -408,13 +408,13 @@ public interface HttpMessageConverter<T> {
 }
 ```
 
-![MappingJackson2HttpMessageConverter继承关系](assets/\image-20221030224056040.png)
+![MappingJackson2HttpMessageConverter继承关系](./assets/image-20221030224056040.png)
 
 
 
 #### 1.6.2 消息转换器初始化
 
-![EnableWebMvcConfiguration继承图](assets/\image-20221112210810174.png)
+![EnableWebMvcConfiguration继承图](./assets/image-20221112210810174.png)
 
 1. 在容器启动时，会加载WebMvcAutoConfiguration的静态内部类EnableWebMvcConfiguration，此类**继承WebMvcConfigurationSupport类；**
 2.  通过@Bean的方式注入了RequestMappingHandlerAdapter， 调用父类的requestMappingHandlerAdapter方法，**创建RequestMappingHandlerAdapter实例，并设置内容协商管理器， 消息转换器， 数据绑定初始器，请求参数处理器， 返回值处理器；** 
@@ -496,13 +496,13 @@ public static class WebMvcAutoConfigurationAdapter implements WebMvcConfigurer {
 	}
 }
 ```
-![ObjectProvider类](assets/\image-20221112212347134.png)
+![ObjectProvider类](./assets/image-20221112212347134.png)
 
 1. ObjectProvider函数接口，实现类为DefaultListableBeanFactory内部类DependencyObjectProvider；此处泛型类型为HttpMessageConverters；
 
 2. 调用ifAvaiable方法，判断该bean是否存在，不存在则通过Bean工厂实例化， 然后调用HttpMessageConverters.getConverters方法；
 
-![image-20221112213141217](assets/\image-20221112213141217.png)
+![image-20221112213141217](./assets/image-20221112213141217.png)
 
 
 
@@ -1039,7 +1039,7 @@ public List<MediaType> resolveMediaTypes(NativeWebRequest request) throws HttpMe
 }
 ```
 
-![ContentNegotiationStrategy](assets/\image-20221116214151959.png)
+![ContentNegotiationStrategy](./assets/image-20221116214151959.png)
 
 
 
@@ -1065,7 +1065,7 @@ public abstract class AbstractMappingContentNegotiationStrategy extends MappingM
 }      
 ```
 
-![ParameterContentNegotaitionStrategy](assets/\image-20221116214800949.png)
+![ParameterContentNegotaitionStrategy](./assets/image-20221116214800949.png)
 
 ## 
 

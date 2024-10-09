@@ -680,7 +680,7 @@ protected ModelAndView processHandlerException(HttpServletRequest request, HttpS
 }
 ```
 
-![HandlerExceptionResolver异常解析器](assets/\image-20221127150834920.png)
+![HandlerExceptionResolver异常解析器](./assets/image-20221127150834920.png)
 
 - DefaultErrorAttributes: 往请求中加入异常信息, 返回为null；
 
@@ -1016,7 +1016,7 @@ private static class StaticView implements View {
 
 最终浏览器显示的页面就是这样的：
 
-![error.html](assets/\image-20221127163603133.png)
+![error.html](./assets/image-20221127163603133.png)
 
 ### 异常处理 - 几种异常处理应用与原理分析
 
@@ -1049,7 +1049,7 @@ public class AnnotationExceptionHandler {
 
   - 继承关系
 
-  ![ExceptionHandlerExceptionResolver](assets/\image-20221127213156775.png)
+  ![ExceptionHandlerExceptionResolver](./assets/image-20221127213156775.png)
 
   - 源码流程
 
@@ -1195,7 +1195,7 @@ public class AnnotationExceptionHandler {
 
   
 
-![ControllerAdviceBean](assets/\image-20221127222101835.png)
+![ControllerAdviceBean](./assets/image-20221127222101835.png)
 
 
 
@@ -1540,7 +1540,7 @@ protected ConfigurableApplicationContext createApplicationContext() {
 }
 ```
 
-![AnnotationConfigServletWebServerApplicationContext继承关系图](assets/\image-20221203142345459.png)
+![AnnotationConfigServletWebServerApplicationContext继承关系图](./assets/image-20221203142345459.png)
 
 ```java
 //刷新容器

@@ -292,7 +292,7 @@ class MappingRegistry {
 
 7. 1~6步骤被trycatchfinally包住、若发生异常、则调用处理器的执行链的triggerAfterCompletion方法；
 
-![image-20230528115215965](assets/\image-20230528115215965.png)
+![image-20230528115215965](./assets/image-20230528115215965.png)
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -405,7 +405,7 @@ public class UploadServlet extends HttpServlet {
 
 通过postman测试时， 报错
 
-![image-20230528151012219](assets/\image-20230528151012219.png)
+![image-20230528151012219](./assets/image-20230528151012219.png)
 
 若是传统JavaWeb项目， 则xml中需要配置：
 
@@ -466,7 +466,7 @@ public class UploadController {
 //会将请求URL参数和表单参数一起拿到；
 ```
 
-![image-20230528153055499](assets/\image-20230528153055499.png)
+![image-20230528153055499](./assets/image-20230528153055499.png)
 
 如果单纯只想到表单里的test字段，则可使用@RequestPart；
 

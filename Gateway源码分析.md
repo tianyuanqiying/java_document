@@ -84,7 +84,7 @@ GatewayLoadBalancerClientAutoConfiguration ：
 
 ## Spring Cloud工作流程图
 
-![image-20231209154406981](assets/image-20231209154406981.png)
+![image-20231209154406981](./assets/image-20231209154406981.png)
 
 客户端请求经过网关后、 由GatewayHandlerMapping找到GatewayWebHandler,每个GatewayWebHandler包含一组过滤器链、 执行完后、转发请求到服务提供者；
 
@@ -152,7 +152,7 @@ HandlerMapping#getHandler : Gateway中使用配置往容器中注入RoutePredica
 
 - 最终返回Route对象；
 
-![image-20231209171636922](assets/image-20231209171636922.png)
+![image-20231209171636922](./assets/image-20231209171636922.png)
 
 
 
@@ -197,7 +197,7 @@ private Mono<HandlerResult> invokeHandler(ServerWebExchange exchange, Object han
 
     - (new FilteringWebHandler.DefaultGatewayFilterChain(combined)).filter(exchange)： 构造过滤器链调用，按顺序调用全局过滤器；
 
-      ![image-20231209180140782](assets/image-20231209180140782.png)
+      ![image-20231209180140782](./assets/image-20231209180140782.png)
 
 
 

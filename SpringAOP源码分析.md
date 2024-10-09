@@ -41,7 +41,7 @@ public static BeanDefinition registerAspectJAnnotationAutoProxyCreatorIfNecessar
 
 AnnotationAwareAspectJAutoProxyCreator是一个是后置处理, 实现了SmartInstantiationAwareBeanPostProcessor；
 
-![AnnotationAwareAspectJAutoProxyCreator继承关系](assets/\image-20230226165532178.png)
+![AnnotationAwareAspectJAutoProxyCreator继承关系](./assets/image-20230226165532178.png)
 
 ### AnnotationAwareAspectJAutoProxyCreator创建
 
@@ -573,4 +573,4 @@ protected Object createProxyClassAndInstance(Enhancer enhancer, Callback[] callb
   - 先执行MethodInvocation#proceed方法， 如果没有一个Interceptor, 则执行target的目标方法；
   - 执行AfterReturning对应的方法；
 
-![AOP流程](assets/\image-20230301233010286.png)
+![AOP流程](./assets/image-20230301233010286.png)

@@ -37,7 +37,7 @@ call insert_emp();
 EXPLAIN SELECT * FROM employees WHERE name > 'LiLei' AND age = 22 AND position ='manager';
 ```
 
-![image-20230601112831409](assets/image-20230601112831409.png)
+![image-20230601112831409](./image-20230601112831409.png)
 
 结论：
 
@@ -51,7 +51,7 @@ EXPLAIN SELECT * FROM employees WHERE name > 'LiLei' AND age = 22 AND position =
 EXPLAIN SELECT * FROM employees force index(idx_name_age_position) WHERE name > 'LiLei' AND age = 22 AND position ='manager';
 ```
 
-![image-20230601113014246](assets/image-20230601113014246.png)
+![image-20230601113014246](./assets/image-20230601113014246.png)
 
 结论：强制走了索引， rows数量下降， 效率不一定比全表扫描快， 回表比较耗费时间
 
@@ -79,13 +79,13 @@ EXPLAIN SELECT name,age,position FROM employees WHERE name > 'LiLei' AND age = 2
 EXPLAIN SELECT * FROM employees WHERE name in ('LiLei','HanMeimei','Lucy') AND age = 22 AND position ='manager';
 ```
 
-![image-20230601114003460](assets/image-20230601114003460.png)
+![image-20230601114003460](./assets/image-20230601114003460.png)
 
 ```mysql
 EXPLAIN SELECT * FROM employees WHERE (name = 'LiLei' or name = 'HanMeimei') AND age = 22 AND position ='manager';
 ```
 
-![image-20230601114325376](assets/image-20230601114325376.png)
+![image-20230601114325376](./assets/image-20230601114325376.png)
 
 结论：in或者or数据量多时， 回表次数太多，不如全表扫描快； 数据量少时， 则回表次数少，可使用二级索引，效率比全表扫描快；
 
@@ -97,7 +97,7 @@ EXPLAIN SELECT * FROM employees WHERE (name = 'LiLei' or name = 'HanMeimei') AND
 EXPLAIN SELECT * FROM employees WHERE name like 'LiLei%' AND age = 22 AND position ='manager';
 ```
 
-![image-20230601114523749](assets/image-20230601114523749.png)
+![image-20230601114523749](./assets/image-20230601114523749.png)
 
 
 
@@ -127,7 +127,7 @@ EXPLAIN SELECT * FROM employees WHERE name like 'LiLei%' AND age = 22 AND positi
 EXPLAIN select * from employees where name > 'a';
 ```
 
-![image-20230601125502104](assets/image-20230601125502104.png)
+![image-20230601125502104](./assets/image-20230601125502104.png)
 
 如果用name索引需要遍历name字段联合索引树，然后还需要根据遍历出来的主键值去主键索引树里再去查出最终数据，成本比全表扫描还高，可以用覆盖索引优化，这样只需要遍历name字段的联合索引树就能拿到所有结果，如下：
 
@@ -135,7 +135,7 @@ EXPLAIN select * from employees where name > 'a';
 EXPLAIN select name,age,position from employees where name > 'a' ;
 ```
 
-![image-20230601125548819](assets/image-20230601125548819.png)
+![image-20230601125548819](./assets/image-20230601125548819.png)
 
 
 
@@ -143,7 +143,7 @@ EXPLAIN select name,age,position from employees where name > 'a' ;
 EXPLAIN select * from employees where name > 'zzz' ;
 ```
 
-![image-20230601125648381](assets/image-20230601125648381.png)
+![image-20230601125648381](./assets/image-20230601125648381.png)
 
 对于上面这两种 name>'a' 和 name>'zzz' 的执行结果，mysql最终是否选择走索引或者一张表涉及多个索引，mysql最终如何选择索引，我们可以用**trace工具**来一查究竟，开启trace工具会影响mysql性能，所以只能临时分析sql使用，用完之后立即关闭
 
@@ -371,55 +371,55 @@ mysql> set session optimizer_trace="enabled=off";    --关闭trace
 
 例一：
 
-![image-20230601130111448](assets/image-20230601130111448.png)
+![image-20230601130111448](./assets/image-20230601130111448.png)
 
 利用最左前缀法则：中间字段不能断，因此查询用到了name索引，查出name="LiLei"后，结果age是有序的，从key_len=74也能看出，age索引列用在排序过程中，因为Extra字段里没有using filesort
 
 例二：
 
-![image-20230601130239618](assets/image-20230601130239618.png)
+![image-20230601130239618](./assets/image-20230601130239618.png)
 
 查出name="LiLei"后， 只有再age相等情况下，position才是有序的， 因此跳过了age字段，使用position排序，出现 Using filesort;
 
 例三：
 
-![image-20230601130606990](assets/image-20230601130606990.png)
+![image-20230601130606990](./assets/image-20230601130606990.png)
 
 在name="LiLei"数据后，age是有序的， age相等的情况下，position是有序的， order by age, postion表示 先根据age排序， age相等的情况下，再根据position排序， order by的条件与索引排序相同，因此无Using filesort;
 
 例四：
 
-![image-20230601130845209](assets/image-20230601130845209.png)
+![image-20230601130845209](./assets/image-20230601130845209.png)
 
 和Case 3中explain的执行结果一样，但是出现了Using filesort，因为索引的创建顺序为name,age,position，但是排序的时候age和position颠倒位置了。
 
 例五：
 
-![image-20230601130944464](assets/image-20230601130944464.png)
+![image-20230601130944464](./assets/image-20230601130944464.png)
 
 与Case 4对比，在Extra中并未出现Using filesort，因为age为常量，在排序中被优化，所以索引未颠倒，不会出现Using filesort。
 
 例六：
 
-![image-20230601131155244](assets/image-20230601131155244.png)
+![image-20230601131155244](./assets/image-20230601131155244.png)
 
 索引排序默认是升序的， 虽然order by没有跳过字段， 但是position desc变为降序，与索引树排序不相同，因此需要文件排序，所以出现Using filesort;
 
 例七：
 
-![image-20230601131349864](assets/image-20230601131349864.png)
+![image-20230601131349864](./assets/image-20230601131349864.png)
 
 查出name=LiLei, zhuge后， age是无序的，因此出现Using filesort;
 
 例八：
 
-![image-20230601131803351](assets/image-20230601131803351.png)
+![image-20230601131803351](./assets/image-20230601131803351.png)
 
 全表扫描，因为范围查询结果集大，回表效率低，不如全表来得快；
 
 如果查询数据只需要索引字段，则可以用覆盖索引优化
 
-![**image-20230601131913477**](assets/image-20230601131913477.png)
+![**image-20230601131913477**](./assets/image-20230601131913477.png)
 
 **优化总结**
 
@@ -450,7 +450,7 @@ mysql> set session optimizer_trace="enabled=off";    --关闭trace
 
 
 
-![image-20230601132415872](assets/image-20230601132415872.png)
+![image-20230601132415872](./assets/image-20230601132415872.png)
 
 查看下这条sql对应trace结果如下
 
@@ -582,7 +582,7 @@ mysql> set session optimizer_trace="enabled=off";    --关闭trace
 
 ### 索引设计实例
 
-![](assets/索引设计实战.png)
+![](./assets/索引设计实战.png)
 
 以社交场景APP来举例，我们一般会去搜索一些好友，这就涉及到对用户的筛选，是对用户user表搜索，这个表数据量会比较大，比如，我们一般会筛选地区(省市)，性别，年龄，身高，爱好之类；
 

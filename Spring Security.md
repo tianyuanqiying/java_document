@@ -94,7 +94,7 @@ SecurityAutoConfiguration作用： 通过@Bean注册认证事件发布器、 通
 
 WebSecurity继承关系
 
-![image-20240102082310427](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102082310427.png)
+![image-20240102082310427](./assets/image-20240102082310427.png)
 
 类型为Filter， Bean名称为springSecurityFilterChain的创建过程
 
@@ -227,7 +227,7 @@ WebSecurity继承关系
 
       
 
-      ![image-20240102085003841](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102085003841.png)
+      ![image-20240102085003841](./assets/image-20240102085003841.png)
 
 
 
@@ -462,7 +462,7 @@ SpringSecurity的Advise、实现了权限判断的增强逻辑；
         http.sessionManagement().invalidSessionStrategy(new EmptyInvalidSessionStrategy());
         ```
 
-        ![image-20240102140241302](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102140241302.png)
+        ![image-20240102140241302](./assets/image-20240102140241302.png)
 
       - 若没有、则调用下一个过滤处理
 
@@ -488,7 +488,7 @@ SpringSecurity的Advise、实现了权限判断的增强逻辑；
 
 Spring Security本质就是一条过滤器链；
 
-![image-20240103021722222](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103021722222.png)
+![image-20240103021722222](./assets/image-20240103021722222.png)
 
 ### SecurityContextPersistenceFilter
 
@@ -794,7 +794,7 @@ http.formLogin().loginPage("/login.html").loginProcessingUrl("/user/login")
       - super.setAuthenticated(true) : 设置状态为认证成功
     - result.setDetails(authentication.getDetails()) ： 设置用户信息
 
-![image-20240102222009353](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102222009353.png)
+![image-20240102222009353](./assets/image-20240102222009353.png)
 
 
 
@@ -873,7 +873,7 @@ public interface AuthenticationManager {
 }
 ```
 
-![image-20240102220205097](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102220205097.png)
+![image-20240102220205097](./assets/image-20240102220205097.png)
 
 
 
@@ -891,7 +891,7 @@ public interface AuthenticationProvider {
 }
 ```
 
-![image-20240102220301325](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102220301325.png)
+![image-20240102220301325](./assets/image-20240102220301325.png)
 
 ###### DaoAuthenticationProvider
 
@@ -899,7 +899,7 @@ public interface AuthenticationProvider {
 
 在Spring Security中，提交的用户名和密码，被封装成UsernamePasswordAuthenticationToken，而根据用户名加载用户的任务则是交给了UserDetailsService，在DaoAuthenticationProvider中，对应的方法便是retrieveUser，返回一个UserDetails。
 
-![image-20240102220417622](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102220417622.png)
+![image-20240102220417622](./assets/image-20240102220417622.png)
 
 ##### Authentication
 
@@ -909,7 +909,7 @@ Authentication在spring security中是最高级别的身份/认证的抽象，�
 
 `UsernamePasswordAuthenticationToken`实现了 `Authentication`主要是将用户输入的用户名和密码进行封装，并供给 `AuthenticationManager` 进行验证；验证完成以后将返回一个认证成功的 `Authentication` 对象
 
-![image-20240102220858066](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102220858066.png)
+![image-20240102220858066](./assets/image-20240102220858066.png)
 
 
 
@@ -956,7 +956,7 @@ public interface UserDetailsService {
 
 Spring Security内置了两种 UserDetailsManager实现
 
-![image-20240102221111535](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102221111535.png)
+![image-20240102221111535](./assets/image-20240102221111535.png)
 
 实际项目中，我们更多采用调用 `AuthenticationManagerBuilder#userDetailsService(userDetailsService)` 方法，使用自定义实现的 UserDetailsService实现类，更加灵活且自由的实现认证的用户信息的读取
 
@@ -1001,7 +1001,7 @@ public class UserServiceInDB implements UserDetailsService{
 
 用户信息核心接口，默认实现类org.springframework.security.core.userdetails.User
 
-![image-20240102221326335](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102221326335.png)
+![image-20240102221326335](./assets/image-20240102221326335.png)
 
 ##### PasswordEncoder
 
@@ -1021,7 +1021,7 @@ public interface PasswordEncoder {
 }
 ```
 
-![image-20240102221407064](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240102221407064.png)
+![image-20240102221407064](./assets/image-20240102221407064.png)
 
 BCryptPasswordEncoder 是 Spring Security 官方推荐的密码解析器 。BCryptPasswordEncoder 是对 bcrypt 强散列方法的具体实现，是基于Hash算法实现的单向加密，可以通过strength控制加密强度，默认 10。
 
@@ -1223,7 +1223,7 @@ protected void configure(HttpSecurity http) throws Exception {
 
 缺点：多节点部署场景下、不适用，会出现会话不一致问题；
 
-![image-20240103020403732](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103020403732.png)
+![image-20240103020403732](./assets/image-20240103020403732.png)
 
 利用redis解决共享会话问题；
 
@@ -1270,7 +1270,7 @@ server:
 法授权则拦截器为MethodSecurityInterceptor。如果同时通过web授权和方法授权则先执行web授权，再执行方
 法授权，最后决策通过，则允许访问资源，否则将禁止访问。    
 
-![image-20240103023131286](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103023131286.png)
+![image-20240103023131286](./assets/image-20240103023131286.png)
 
 **Web授权本质是通过Filter判断的、而方法授权是通过AOP判断的， 在Servlet层面执行、因此若是Web层不通过， 就直接返回，不会执行方法授权的判断；**
 
@@ -1391,7 +1391,7 @@ public C antMatchers(String... antPatterns)
 
 否则报403错误
 
-![image-20240103024224352](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103024224352.png)
+![image-20240103024224352](./assets/image-20240103024224352.png)
 
 ###### hasAnyAuthority(String ...)  
 
@@ -1437,7 +1437,7 @@ https://docs.spring.io/spring-security/site/docs/5.2.7.RELEASE/reference/htmlsin
 
 表达式根对象的基类是SecurityExpressionRoot，提供了一些在web和方法安全性中都可用的通用表达式。
 
-![image-20240103025434964](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103025434964.png)
+![image-20240103025434964](./assets/image-20240103025434964.png)
 
 可以通过 access() 实现和之前学习的权限控制完成相同的功能。
 
@@ -1645,7 +1645,7 @@ public class DemoController {
 
 ##### Web授权流程图
 
-![image-20240103033400041](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103033400041.png)
+![image-20240103033400041](./assets/image-20240103033400041.png)
 
 1. 拦截请求，已认证用户访问受保护的web资源将被SecurityFilterChain中的 FilterSecurityInterceptor 的子
    类拦截。
@@ -1709,7 +1709,7 @@ public interface AccessDecisionManager {
 }
 ```
 
-![image-20240103033653212](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103033653212.png)
+![image-20240103033653212](./assets/image-20240103033653212.png)
 
 ###### AffirmativeBased
 
@@ -1760,7 +1760,7 @@ public interface AccessDecisionVoter<S> {
 }
 ```
 
-![image-20240103033943772](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103033943772.png)
+![image-20240103033943772](./assets/image-20240103033943772.png)
 
 ##### MethodSecurityInterceptor
 
@@ -1782,4 +1782,4 @@ public Object invoke(MethodInvocation mi) throws Throwable {
 }
 ```
 
-![image-20240103034033859](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20240103034033859.png)
+![image-20240103034033859](./assets/image-20240103034033859.png)

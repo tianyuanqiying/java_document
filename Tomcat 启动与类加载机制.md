@@ -98,7 +98,7 @@ Tomcat打破双亲委派机制 ： tomcat为什么要打破双亲委派？
 
    Tomcat类加载器父子关系
 
-​	![image-20240122121629645](assets/image-20240122121629645.png)
+​	![image-20240122121629645](./assets/image-20240122121629645.png)
 
  
 
@@ -681,7 +681,7 @@ Tomcat解决方案：在发生热部署时、会话管理器取出会话缓存Ma
 
 总结：处理Context后台任务时、当部署目录文件发生变动、触发热部署时，触发StandardContext重新加载， 先停止、停止过程会调用会话管理器StandardManager停止处理、 在work目录下创建SESSION.ser临时文件、先写入会话总数、 遍历会话缓存Map的所有会话、将每个会话的详情数据写入临时文件SESSION.tar里，当Context启动、调用会话管理器StandardManager启动处理、读取SESSION.ser文件、读取会话总数、 逐个创建会话， 并读取会话详情信息、放入会话缓存Map中；
 
-![image-20240126110750650](assets/image-20240126110750650.png)
+![image-20240126110750650](./assets/image-20240126110750650.png)
 
 
 
@@ -752,7 +752,7 @@ public class DispatcherServletAutoConfiguration {}
 
   
 
-![image-20240131140147841](assets/image-20240131140147841.png)
+![image-20240131140147841](./assets/image-20240131140147841.png)
 
 DispatcherServletRegistrationBean实现了ServletContextInitializer接口;
 

@@ -20,7 +20,7 @@
 
 Spring MVC 是围绕前端控制器模式设计的，其中：中央 Servlet DispatcherServlet 为 请求处理流程提供统一调度，实际工作则交给可配置组件执行。这个模型是灵活的且开 放的，我们可以通过自己去定制这些组件从而进行定制自己的工作流。
 
-![image-20230526202809969](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230526202809969.png)
+![image-20230526202809969](./assets/image-20230526202809969.png)
 
 1. 用户发送请求至前端控制器DispatcherServlet 
 2.  DispatcherServlet收到请求调用处理器映射器HandlerMapping。
@@ -154,7 +154,7 @@ HandlerMapping负责去寻找Handler，并且保存路径和Handler之间的映�
 
 各种HandlerMapping 不仅要找Handler与请求的映射关系， 还要提供根据请求路径获取Handler的方法；上述HandlerMapping都有共同父类AbstractHandlerMapping
 
-![image-20230526235541950](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230526235541950.png)
+![image-20230526235541950](./assets/image-20230526235541950.png)
 
 获取handler过程：
 

@@ -1176,11 +1176,11 @@ RM处理分支事务回滚请求：
 
 资源管理器、Seata核心组件、负责与TC交互、负责管理分支数据资源的任务；
 
-![image-20231203163958225](assets/image-20231203163958225.png)
+![image-20231203163958225](./assets/image-20231203163958225.png)
 
 AbstractResourceManager实现ResourceManager提供模板方法。DefaultResourceManager适配所有的ResourceManager，所有方法调用都委派给对应负责的ResourceManager处理。
 
-![image-20231203164108775](assets/image-20231203164108775.png)
+![image-20231203164108775](./assets/image-20231203164108775.png)
 
 
 
@@ -1188,7 +1188,7 @@ AbstractResourceManager实现ResourceManager提供模板方法。DefaultResource
 
 AT模式核心源管理器、集成AbstractResourceManager，管理数据库Resource的注册、提交、回滚；
 
-![image-20231203164316570](assets/image-20231203164316570.png)
+![image-20231203164316570](./assets/image-20231203164316570.png)
 
 **AsyncWorker**
 
@@ -1204,23 +1204,23 @@ AsyncWorker#doBranchCommits
 
 回滚日志管理器、负责undo日志的管理；
 
-![image-20231203164417775](assets/image-20231203164417775.png)
+![image-20231203164417775](./assets/image-20231203164417775.png)
 
 **TransactionManager**
 
-![image-20231203164500700](assets/image-20231203164500700.png)
+![image-20231203164500700](./assets/image-20231203164500700.png)
 
 **DefaultTransactionManager**
 
 TransactionManagerHolder为创建单例TransactionManager的工厂，可以使用EnhancedServiceLoader的spi机制加载用户自定义的类，默认为DefaultTransactionManager。
 
-![image-20231203164534951](assets/image-20231203164534951.png)
+![image-20231203164534951](./assets/image-20231203164534951.png)
 
 **GlobalTransaction**
 
 GlobalTransaction接口提供给用户开启事务，提交，回滚，获取状态等方法。
 
-![image-20231203164550608](assets/image-20231203164550608.png)
+![image-20231203164550608](./assets/image-20231203164550608.png)
 
 **DefaultGlobalTransaction**
 
@@ -1248,7 +1248,7 @@ Resource能被ResourceManager管理并且能够关联GlobalTransaction。
 
 DataSourceProxy实现Resource接口，BranchType为AT自动模式。它继承AbstractDataSourceProxy代理类，所有的DataSource相关的方法调用传入的targetDataSource代理类的方法，除了创建connection方法为创建ConnectionProxy代理类。对象初始化时获取连接的jdbcUrl作为resourceId,并注册至DefaultResourceManager进行管理。同时还提供获取原始连接不被代理的getPlainConnection方法。
 
-![image-20231203164711559](assets/image-20231203164711559.png)
+![image-20231203164711559](./assets/image-20231203164711559.png)
 
 **ConnectionProxy**
 
@@ -1293,7 +1293,7 @@ ExecuteTemplate为具体statement的execute，executeQuery和executeUpdate执行
 
 对于不同的SQL类型、会有不同的执行器负责执行SQL；
 
-![image-20231203165028939](assets/image-20231203165028939.png)
+![image-20231203165028939](./assets/image-20231203165028939.png)
 
 **SQLRecognizer**
 
@@ -1319,21 +1319,21 @@ RM交互层次：
 
 DefaultCoordinator即为TC，全局事务默认的事务协调器。它继承AbstractTCInboundHandler接口，为TC接收RM和TM的request请求数据，是进行相应处理的处理器。实现TransactionMessageHandler接口，去处理收到的RPC信息。实现ResourceManagerInbound接口，发送至RM的branchCommit，branchRollback请求。
 
-![image-20231203165938807](assets/image-20231203165938807.png)
+![image-20231203165938807](./assets/image-20231203165938807.png)
 
-![image-20231203165948971](assets/image-20231203165948971.png)
+![image-20231203165948971](./assets/image-20231203165948971.png)
 
 **Core**
 
 Core接口为seata处理全球事务协调器TC的核心处理器，它继承ResourceManagerOutbound接口，接受来自RM的rpc网络请求（branchRegister，branchReport，lockQuery）。同时继承TransactionManager接口，接受来自TM的rpc网络请求（begin，commit,rollback,getStatus），另外提供提供3个接口方法。
 
-![image-20231203171251218](assets/image-20231203171251218.png)
+![image-20231203171251218](./assets/image-20231203171251218.png)
 
-![image-20231203171322393](assets/image-20231203171322393.png)
+![image-20231203171322393](./assets/image-20231203171322393.png)
 
 **ATCore**
 
-![image-20231203171331492](assets/image-20231203171331492.png)
+![image-20231203171331492](./assets/image-20231203171331492.png)
 
 **GlobalSession**
 
@@ -1347,13 +1347,13 @@ BranchSession为分支session，管理分支数据，受globalSession统一调�
 
 DefaultLockManager是LockManager的默认实现，它获取branchSession的lockKey，转换成List，委派Locker进行处理。
 
-![image-20231203171423253](assets/image-20231203171423253.png)
+![image-20231203171423253](./assets/image-20231203171423253.png)
 
 **Locker**
 
 Locker接口提供根据行数据获取锁，释放锁，是否锁住和清除所有锁的方法。
 
-![image-20231203171436600](assets/image-20231203171436600.png)
+![image-20231203171436600](./assets/image-20231203171436600.png)
 
 
 

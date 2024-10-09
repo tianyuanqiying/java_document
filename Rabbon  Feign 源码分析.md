@@ -156,7 +156,7 @@ RibbonAutoConfiguration配置类主要工作：
 
 RestTemplate类继承InterceptingHttpAccessor， InterceptingHttpAccessor继承HttpAccessor;
 
-![image-20231219161005437](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20231219161005437.png)
+![image-20231219161005437](./assets/image-20231219161005437.png)
 
 
 
@@ -350,9 +350,9 @@ LoadBalancerRequestFactory ： 负载均衡请求工厂、负责包装request对
 
 InterceptingClientHttpRequest继承关系
 
-![image-20231219163156520](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20231219163156520.png)
+![image-20231219163156520](./assets/image-20231219163156520.png)
 
-![image-20231220000929667](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20231220000929667.png)
+![image-20231220000929667](./assets/image-20231220000929667.png)
 
 ## Feign源码分析
 
@@ -572,7 +572,7 @@ public class ConsumerController {
 FeignLoadBalancer继承AbstractLoadBalancerAwareClient，executeWithLoadBalancer由父类实现
 
 - AbstractLoadBalancerAwareClient#executeWithLoadBalancer
-  - ![image-20231220045459944](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20231220045459944.png)
+  - ![image-20231220045459944](./assets/image-20231220045459944.png)
   - 创建ServerOperation对象、用lambda表达式实现了call方法
     - submit方法中会调用到call方法里的实现；
   - LoadBalancerCommand#submit方法传入ServerOperation对象

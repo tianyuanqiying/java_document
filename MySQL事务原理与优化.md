@@ -26,7 +26,7 @@
 
 Mysql通过不同的隔离级别 级别解决 脏读，不可重复读， 幻读问题；
 
-![image-20230607180415683](assets/image-20230607180415683.png)
+![image-20230607180415683](./assets/image-20230607180415683.png)
 
 **数据库的事务隔离越严格,并发副作用越小,但付出的代价也就越大,因为事务隔离实质上就是使事务在一定程度上“串行化”进行,这显然与“并发”是矛盾的。**
 
@@ -69,9 +69,9 @@ INSERT INTO `test`.`account` (`name`, `balance`) VALUES ('lucy', '2400');
   select * from account;
   ```
 
-  ![image-20230607181901103](assets/image-20230607181901103.png)
+  ![image-20230607181901103](./assets/image-20230607181901103.png)
 
-![image-20230607181908123](assets/image-20230607181908123.png)
+![image-20230607181908123](./assets/image-20230607181908123.png)
 
 2.  事务B：开启事务，更新id=1的数据，事务不提交；
 
@@ -82,15 +82,15 @@ update account set balance = balance - 50 where id = 1;
 select * from account;
 ```
 
-![image-20230607182001296](assets/image-20230607182001296.png)
+![image-20230607182001296](./assets/image-20230607182001296.png)
 
-![image-20230607182008238](assets/image-20230607182008238.png)
+![image-20230607182008238](./assets/image-20230607182008238.png)
 
 
 
 3. 事务A重启查询：查到了事务B未提交的数据，**即脏读**
 
-![image-20230607182136814](assets/image-20230607182136814.png)
+![image-20230607182136814](./assets/image-20230607182136814.png)
 
 4. 事务B回滚， 则事务A读取数据为脏数据；
 
@@ -100,7 +100,7 @@ ROLLBACK;
 select * from account;
 ```
 
-![image-20230607182543350](assets/image-20230607182543350.png)
+![image-20230607182543350](./assets/image-20230607182543350.png)
 
 5. 事务A 执行更新数据；
 
@@ -110,7 +110,7 @@ update account set balance = balance - 50 where id = 1;
 select * from account;
 ```
 
-![image-20230607182708901](assets/image-20230607182708901.png)
+![image-20230607182708901](./assets/image-20230607182708901.png)
 
 问题：事务A读取到的是400， sql执行后还是400？
 
@@ -132,7 +132,7 @@ BEGIN;
 select * from account;
 ```
 
-![image-20230607220418990](assets/image-20230607220418990.png)
+![image-20230607220418990](./assets/image-20230607220418990.png)
 
 2. 在客户端A的事务提交之前，打开另一个客户端B，更新表account： 
 
@@ -143,11 +143,11 @@ update account set balance = balance - 50 where id = 1;
 select * from account;
 ```
 
-![image-20230607220539548](assets/image-20230607220539548.png)
+![image-20230607220539548](./assets/image-20230607220539548.png)
 
 3. 在客户端A再次查询， 并不能查询到客户端B修改的数据，解决了脏读问题；
 
-![image-20230607220608867](assets/image-20230607220608867.png)
+![image-20230607220608867](./assets/image-20230607220608867.png)
 
 4. 客户端B提交事务
 
@@ -157,7 +157,7 @@ COMMIT;
 
 5. 客户端A重新执行同样的SQL查询， 数据发生变化，即**产生不可重复读问题**；
 
-![image-20230607221016315](assets/image-20230607221016315.png)
+![image-20230607221016315](./assets/image-20230607221016315.png)
 
 - 可重复读
   - 在事务开启后，首次查询的是已提交的最新数据，并生成快照；
@@ -173,7 +173,7 @@ BEGIN;
 select * from account;
 ```
 
-![image-20230607223040960](assets/image-20230607223040960.png)
+![image-20230607223040960](./assets/image-20230607223040960.png)
 
 2. 在客户端A的事务提交之前，打开另一个客户端B，更新表account并提交
 
@@ -184,7 +184,7 @@ update account set balance = balance - 50 where id = 1;
 select * from account;
 ```
 
-![image-20230607223139842](assets/image-20230607223139842.png)
+![image-20230607223139842](./assets/image-20230607223139842.png)
 
 3. 在客户端A查询表account的所有记录，与步骤（1）查询结果一致，没有出现不可重复读的问题
 
@@ -192,7 +192,7 @@ select * from account;
 select * from account;
 ```
 
-![image-20230607223303841](assets/image-20230607223303841.png)
+![image-20230607223303841](./assets/image-20230607223303841.png)
 
 和一步骤查出的数据一致，不可重复读问题解决；
 
@@ -203,7 +203,7 @@ update account set balance = balance - 50 where id = 1;
 select * from account;
 ```
 
-![image-20230607223645046](assets/image-20230607223645046.png)
+![image-20230607223645046](./assets/image-20230607223645046.png)
 
 因为客户端B已经修改为400了， 所以更新为350保证了一致性问题； 
 
@@ -224,7 +224,7 @@ COMMIT;
 select * from account;
 ```
 
-![image-20230607224233830](assets/image-20230607224233830.png)
+![image-20230607224233830](./assets/image-20230607224233830.png)
 
 7. 验证幻读
 
@@ -235,7 +235,7 @@ update account set balance=888 where id = 4;
 select * from account;
 ```
 
-![image-20230607225153208](assets/image-20230607225153208.png)
+![image-20230607225153208](./assets/image-20230607225153208.png)
 
 8. 写写阻塞
 
@@ -256,7 +256,7 @@ BEGIN;
 update account set balance = balance - 50 where id = 1;
 ```
 
-![image-20230607225830496](assets/image-20230607225830496.png)
+![image-20230607225830496](./assets/image-20230607225830496.png)
 
 客户端A提交事务；
 
@@ -266,7 +266,7 @@ COMMIT;
 
 客户端B获取到行锁， 阻塞自动接触，
 
-![image-20230607230019937](assets/image-20230607230019937.png)
+![image-20230607230019937](./assets/image-20230607230019937.png)
 
 
 
@@ -284,7 +284,7 @@ BEGIN;
 select * from account where id = 1;
 ```
 
-![image-20230607230822523](assets/image-20230607230822523.png)
+![image-20230607230822523](./assets/image-20230607230822523.png)
 
 2. 打开一个客户端B，并设置当前事务模式为serializable，更新相同的id为1的记录会被阻塞等待，更新id为2的记录可以成功，说明在串行模式下innodb的查询也会被加上行锁，如果查询的记录不存在会给这条不存在的记录加上锁;
 
@@ -294,7 +294,7 @@ BEGIN;
 update account set balance = balance - 50 where id = 1;
 ```
 
-![image-20230607230918763](assets/image-20230607230918763.png)
+![image-20230607230918763](./assets/image-20230607230918763.png)
 
 **对于同一条记录，读写，写写不可同时执行；**
 

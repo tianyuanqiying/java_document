@@ -363,7 +363,7 @@ class SpringBootBanner implements Banner {
 }
 ```
 
-![SpirngBoot默认Banner图案](assets/\image-20221204105055912.png)
+![SpirngBoot默认Banner图案](./assets/image-20221204105055912.png)
 
 #### 8、创建IOC容器
 

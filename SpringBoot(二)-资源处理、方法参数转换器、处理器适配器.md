@@ -269,7 +269,7 @@ public String format(Date data) {
 }
 ```
 
-![image-20221030145530066](assets/\image-20221030145530066.png)
+![image-20221030145530066](./assets/image-20221030145530066.png)
 
 对于这种情况，可以利用@InitBinder生成时间格式化器：
 
@@ -325,7 +325,7 @@ protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletExcepti
 }
 ```
 
-![handlerAdapter](assets/\image-20221012222830971.png)
+![handlerAdapter](./assets/image-20221012222830971.png)
 
 - RequestMappingHandlerAdapter ： 用来处理注解方法方式的处理器URL请求，如@RequestMapping,@PostMapping等；
 - HandlerFunctionAdapter:用来处理函数式方式的请求；
@@ -334,7 +334,7 @@ protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletExcepti
 
 此处只关注注解方法模式的URL请求；
 
-![image-20221012223818825](assets/\image-20221012223818825.png)
+![image-20221012223818825](./assets/image-20221012223818825.png)
 
 而对应的handler类型**为HandlerMethod**
 
@@ -664,7 +664,7 @@ public interface HandlerMethodArgumentResolver {
 
 常见的参数转换器如下：
 
-![ArgumentResolver](assets/\image-20221012233708244.png)
+![ArgumentResolver](assets/image-20221012233708244.png)
 
 ### 1、 @RequestParam、 @RequestPart、@RequestHeader、 @RequestBody的处理
 
@@ -1558,7 +1558,7 @@ public class ModelAndViewContainer {
 
 useDefaultModel方法中，判断是否使用默认的model, redirectModelScenario默认为false, 因此返回true, 因此返回的defaultModel,  该model类型为BindingAwareModelMap
 
-![BindingAwareModelMap](assets/\image-20221023135709679.png)
+![BindingAwareModelMap](./assets/image-20221023135709679.png)
 
 **BindingAwareModelMap与ModelMap都继承了HashMap，因此本质和HashMap一样；**
 
@@ -1718,7 +1718,7 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 ```
 
-![InternalResouceView继承关系](assets/\image-20221023144133280.png)
+![InternalResouceView继承关系](./assets/image-20221023144133280.png)
 
 ```java
 //--------------------InternalResouceView#render-------------------------------
@@ -1905,7 +1905,7 @@ public class DefaultDataBinderFactory implements WebDataBinderFactory {
 }
 ```
 
-![ExtendedServletRequestDataBinder](assets/\image-20221023211919606.png)
+![ExtendedServletRequestDataBinder](./assets/image-20221023211919606.png)
 
 ```java
 //------------------
@@ -2073,11 +2073,11 @@ public <T> T convertIfNecessary(@Nullable String propertyName, @Nullable Object 
  }
 ```
 
-![WebConversionService](assets/\image-20221023221357433.png)
+![WebConversionService](./assets/image-20221023221357433.png)
 
-![TypeConverterDalegate#webConversionService#converters](assets/\image-20221023221444065.png)
+![TypeConverterDalegate#webConversionService#converters](./assets/image-20221023221444065.png)
 
-![部分参数格式转换器](assets/\image-20221023221659741.png)
+![部分参数格式转换器](./assets/image-20221023221659741.png)
 
 
 

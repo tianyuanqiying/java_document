@@ -97,7 +97,7 @@ ApplicationContext接口继承了ListableBeanFactory， HierarchicalBeanFactory�
 
 ### DefaultListableBeanFactory
 
-![DefaultListableBeanFactory继承图](assets/image-20230103203950254.png)
+![DefaultListableBeanFactory继承图](./assets/image-20230103203950254.png)
 
 
 
@@ -128,7 +128,7 @@ ApplicationContext是BeanFactory的一种、还继承了其他接口，因此具
 
 而AppContext接口有两个主要实现类：ClassPathXmlApplicationContext、AnnotationConfigApplicationContext;
 
-![AnnotationConfigApplicationContext继承图](assets/image-20230103211028226.png)
+![AnnotationConfigApplicationContext继承图](./assets/image-20230103211028226.png)
 
 ConfigurableApplicationContext: 拥有AppContext、另外拥有LifeCycle的功能
 
@@ -142,7 +142,7 @@ AnnotationConfigApplicationContext:  继承GenericApplicationContext， 实现�
 
 ### ClassPathXmlApplicationContext
 
-![ClassPathXmlApplicationContext继承图](assets/image-20230103211946777.png)
+![ClassPathXmlApplicationContext继承图](./assets/image-20230103211946777.png)
 
 比起AnnotationConfigApplicationContext,  没有继承BeanDefinitionRegistry功能，因此缺少注册Bean定义的功能；
 

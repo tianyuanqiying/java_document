@@ -107,7 +107,7 @@ Spring中，处理@Autowired注解是AutowiredAnnotationBeanPostProcessor, 该�
    - 有一个required=true, 多个required=false的构造方法， 报错；
    - 多个required=false的构造方法，返回所有required=false的构造方法，若存在无参构造方法，一起返回；
 
-![determineCandidateConstructor情况结果图](assets/image-20230124225448183.png)
+![determineCandidateConstructor情况结果图](./assets/image-20230124225448183.png)
 
 ```java
 @Override

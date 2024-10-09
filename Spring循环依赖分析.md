@@ -67,11 +67,11 @@ B经过(4)后，进行属性填充，B依赖A, spring根据属性类型和名称
 
 
 
-![循环依赖图](assets/image-20230120203352051.png)
+![循环依赖图](./assets/image-20230120203352051.png)
 
 既然填充A需要拿A的bean对象， 前面创建A就已经生成Abean对象了，只是不完整的流程， 由于A的bean对象对应的是堆中一块内存， 这块内存中的数据怎么变化都没事，只要堆中地址不变就行；因此，需要缓存存储这个不完整的Abean对象；这样A，B的生命周期都能走通了。
 
-![简单处理循环依赖](assets/image-20230120205240979.png)
+![简单处理循环依赖](./assets/image-20230120205240979.png)
 
 
 
@@ -216,7 +216,7 @@ public Object postProcessAfterInitialization(Object bean, String beanName) throw
 
 - earlyProxyReferences ： 用来判断是否执行过AOP的缓存；
 
-![循环依赖最终流程](assets/image-20230121214820198.png)
+![循环依赖最终流程](./assets/image-20230121214820198.png)
 
 ```java
 @FunctionalInterface

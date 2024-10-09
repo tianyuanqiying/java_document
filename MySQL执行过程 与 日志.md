@@ -1,6 +1,6 @@
 # SQL执行过程 与 日志
 
-![image-20230610143734719](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610143734719.png)
+![image-20230610143734719](./assets/image-20230610143734719.png)
 
 更新SQL执行过程：
 
@@ -18,7 +18,7 @@
    - 写入commit提交标记给redo日志， 提交事务完成；
    - buffer pool 修改的数据通过IO线程异步随机写入磁盘文件；
 
-![SQL执行流程](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610145929944.png)
+![SQL执行流程](./assets/image-20230610145929944.png)
 
 提前写undo log 日志：**若是事务执行失败， 通过undo log回滚修改的数据；**
 
@@ -44,7 +44,7 @@ WAL 预写日志： **先写入redo log 再刷新数据表文件就是WAL机制*
 show variables like '%innodb_log_buffer_size%';
 ```
 
-![redo log buffer size设置](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610162120091.png)
+![redo log buffer size设置](./assets/image-20230610162120091.png)
 
 > The size in bytes of the buffer that InnoDB uses to write to the log files on disk. The default is 16MB. A large log buffer enables large transactions to run without the need to write the log to disk before the transactions commit. Thus, if you have transactions that update, insert, or delete many rows, making the log buffer larger saves disk I/O. For related information, see Memory Configuration, and Section 8.5.4, “Optimizing InnoDB Redo Logging”. For general I/O tuning advice, see Section 8.5.8, “Optimizing InnoDB Disk I/O”.
 
@@ -54,7 +54,7 @@ show variables like '%innodb_log_buffer_size%';
 show variables like '%innodb_log_group_home_dir%';
 ```
 
-![image-20230610163004880](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610163004880.png)
+![image-20230610163004880](./assets/image-20230610163004880.png)
 
 这里是相对目录，不知道mysql数据存放位置，也无法找出文件位置；
 
@@ -64,9 +64,9 @@ show variables like '%innodb_log_group_home_dir%';
 show  global  variables  like  "%datadir%"
 ```
 
-![image-20230610163431579](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610163431579.png)
+![image-20230610163431579](./assets/image-20230610163431579.png)
 
-![image-20230610163532978](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610163532978.png)****
+![image-20230610163532978](./assets/image-20230610163532978.png)****
 
 
 
@@ -76,7 +76,7 @@ show  global  variables  like  "%datadir%"
 show variables like '%innodb_log_files_in_group%';
 ```
 
-![redo 日志文件个数](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610163711800.png)
+![redo 日志文件个数](./assets/image-20230610163711800.png)
 
 **innodb_log_file_size** ： redo日志文件大小， 默认48M， 最大值为512G，最大值是所有日志文件大小综合；
 
@@ -84,7 +84,7 @@ show variables like '%innodb_log_files_in_group%';
 show variables like '%innodb_log_file_size%';
 ```
 
-![image-20230610164135648](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610164135648.png)
+![image-20230610164135648](./assets/image-20230610164135648.png)
 
 为InnoDB引擎设置合适的Redo log空间对于写敏感的工作负载来说是非常重要的，然而，这项工作是要做出权衡的。配置的Redo空间越大，InnoDB就能更好的优化写操作；然而，增大Redo空间也意味着更长的恢复时间当出现崩溃或掉电等意外时。
 
@@ -92,7 +92,7 @@ show variables like '%innodb_log_file_size%';
 
 写入redo日志时， 第一个日志文件写满后，会往另一个日志文件开始写，直到最后一个日志文件写满，再回到第一个日志文件继续写；
 
-![redo日志写入过程](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610164927305.png)
+![redo日志写入过程](./assets/image-20230610164927305.png)
 
 存在两个指针write, check指针；两个指针之间的位置可写的；
 
@@ -118,7 +118,7 @@ check指针：检查要擦除的位置，擦除位置后往后移动，腾出空
 
 page cache ：内存与磁盘交互，效率非常慢。操作系统中从内存中划分一块内存，专门用来写入磁盘文件的。解决内存与磁盘速度不匹配问题；
 
-![redo写入策略流程](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610171039431.png)
+![redo写入策略流程](./assets/image-20230610171039431.png)
 
 查看写入策略设置：
 
@@ -145,7 +145,7 @@ Mysql5.6后，InnoDb undo日志包含128个回滚段，每个回滚段支持1024
   show variables like 'innodb_undo_directory';
   ```
 
-  ![image-20230610172615072](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610172615072.png)
+  ![image-20230610172615072](./assets/image-20230610172615072.png)
 
 
 
@@ -155,7 +155,7 @@ Mysql5.6后，InnoDb undo日志包含128个回滚段，每个回滚段支持1024
   show variables like 'innodb_undo_logs';
   ```
 
-  ![image-20230610172651306](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610172651306.png)
+  ![image-20230610172651306](./assets/image-20230610172651306.png)
 
 - innodb_undo_tablespaces: 
 
@@ -167,7 +167,7 @@ Mysql5.6后，InnoDb undo日志包含128个回滚段，每个回滚段支持1024
   show variables like 'innodb_undo_tablespaces';
   ```
 
-  ![image-20230610173111125](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610173111125.png)
+  ![image-20230610173111125](./assets/image-20230610173111125.png)
 
 ###  undo log日志什么时候删除
 
@@ -212,7 +212,7 @@ binlog二进制日志记录保存所有执行过的修改语句，不保存查�
 show variables like '%log_bin%';
 ```
 
-![image-20230610215216071](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610215216071.png)
+![image-20230610215216071](./assets/image-20230610215216071.png)
 
 Mysql5.7中，默认关闭，8.0默认打开；若需要binlog工鞥呢，需要修改ini文件，重启服务；
 
@@ -231,7 +231,7 @@ max_binlog_size = 200M # 单个binlog日志文件的大小限制，默认为 1GB
 
 
 
-![image-20230610220147648](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610220147648.png)
+![image-20230610220147648](./assets/image-20230610220147648.png)
 
 ```
 log_bin：binlog日志是否打开状态
@@ -244,7 +244,7 @@ sql_log_bin：sql语句是否写入binlog文件，ON代表需要写入，OFF代�
 
 查看Mysql数据目录下，多了两个binlog日志文件
 
-![image-20230610220228130](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610220228130.png)
+![image-20230610220228130](./assets/image-20230610220228130.png)
 
 第一个就是binlog日志文件，第二个是binlog文件的索引文件，这个文件管理了所有的binlog文件的目录。
 
@@ -254,7 +254,7 @@ sql_log_bin：sql语句是否写入binlog文件，ON代表需要写入，OFF代�
 show binary logs;
 ```
 
-![image-20230610220649736](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230610220649736.png)
+![image-20230610220649736](./assets/image-20230610220649736.png)
 
 
 
@@ -434,7 +434,7 @@ mysqlbinlog  --no-defaults --start-position=219 --stop-position=706 --database=t
 
 执行后，数据恢复；
 
-![image-20230611012956823](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20230611012956823.png)
+![image-20230611012956823](./assets/image-20230611012956823.png)
 
 
 
